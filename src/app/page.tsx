@@ -11,8 +11,6 @@ export default async function Home() {
   const data = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.API_KEY}`);
   const data_json = await data.json();
   const movies: Movie[] = data_json.results;
-  console.log(movies);
-
   return (
     <>
       <h1 className="text-2xl font-bold mb-4">Trending Movies</h1>
