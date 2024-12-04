@@ -7,9 +7,6 @@ interface Movie {
 }
 
 export default async function Home() {
-  const data = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.API_KEY}`);
-  const data_json = await data.json();
-  const movies: Movie[] = data_json.results;
   return (
     <div className="flex items-center justify-center">
       <div className="px-8 py-6 mt-4 text-left rounded-xl">
