@@ -31,7 +31,6 @@ export default async function Home({ searchParams }: HomeProps) {
   const data = await fetch(url, options);
   const data_json = await data.json();
   const movies: Movie[] = data_json.results;
-  console.log(movies);
 
   return (
     <>
