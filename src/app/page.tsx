@@ -1,3 +1,6 @@
+import React from "react";
+import Link from "next/link";
+
 interface Movie {
   id: number;
   title: string;
@@ -7,22 +10,23 @@ interface Movie {
 export default async function Home() {
   const data = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.API_KEY}`);
   const data_json = await data.json();
-  const movies = data_json.results;
+  const movies: Movie[] = data_json.results;
+  console.log(movies);
+
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Trending Movies and TV Shows</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {movies.map((movie) => (
-          <div key={movie.id} className="border rounded-lg overflow-hidden">
+    <>
+      <h1 className="text-2xl font-bold mb-4">Trending Movies</h1>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {movies.map((movie: Movie) => (
+          <Link href={`/movie/${movie.id}`} key={movie.id} className="border rounded-lg overflow-hidden">
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
-              className="w-full h-64 object-cover"
+              className="w-full h-60 md:h-96 object-cover"
             />
-            <h2 className="p-2 font-semibold">{movie.title}</h2>
-          </div>
+          </Link>
         ))}
       </div>
-    </div>
+    </>
   );
 }
