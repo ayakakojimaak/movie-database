@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Search from "../ui/Search";
 
 const Header = () => {
   return (
@@ -7,13 +8,14 @@ const Header = () => {
         <Link href="/" className="text-lg font-bold">
           Movie Website
         </Link>
-        <div>
-          <Link href="/" className="mr-4 hover:text-gray-400">
+        <div className="flex justify-between items-center gap-3">
+          <Link href="/" className="hover:text-gray-400">
             Home
           </Link>
           <Link href="/about" className="hover:text-gray-400">
             About
           </Link>
+          <Search />
         </div>
       </nav>
     </header>
