@@ -31,21 +31,20 @@ export default async function Home({ searchParams }: HomeProps) {
   const data = await fetch(url, options);
   const data_json = await data.json();
   const movies: Movie[] = data_json.results;
-  console.log(movies);
 
   return (
     <>
       <h1 className="text-2xl dark:text-white font-bold mb-4">
         {query ? `Search Results: ${query}` : "Trending Movies"}
       </h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4">
         {movies.map((movie: Movie) => (
-          <Link href={`/movie/${movie.id}`} key={movie.id} className="border rounded-lg overflow-hidden">
+          <Link href={`/movie/${movie.id}`} key={movie.id} className="rounded-lg overflow-hidden">
             {movie.poster_path ? (
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
-                className="w-full h-60 md:h-96 object-cover"
+                className="w-full object-cover"
               />
             ) : (
               <div className="w-full h-60 md:h-96 flex justify-center items-center">{movie.title}</div>
