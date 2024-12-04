@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Search from "../ui/Search";
+import DarkModeToggle from "../ui/DarkModeToggle";
 
 const Header = () => {
   return (
@@ -16,6 +17,7 @@ const Header = () => {
             About
           </Link>
           <Search />
+          <DarkModeToggle />
         </div>
       </nav>
     </header>

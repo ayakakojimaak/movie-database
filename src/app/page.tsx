@@ -35,7 +35,9 @@ export default async function Home({ searchParams }: HomeProps) {
 
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">{query ? `Search Results: ${query}` : "Trending Movies"}</h1>
+      <h1 className="text-2xl dark:text-white font-bold mb-4">
+        {query ? `Search Results: ${query}` : "Trending Movies"}
+      </h1>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {movies.map((movie: Movie) => (
           <Link href={`/movie/${movie.id}`} key={movie.id} className="border rounded-lg overflow-hidden">
