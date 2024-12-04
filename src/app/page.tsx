@@ -37,9 +37,12 @@ export default async function Home({ searchParams }: HomeProps) {
       <h1 className="text-2xl dark:text-white font-bold mb-4">
         {query ? `Search Results: ${query}` : "Trending Movies"}
       </h1>
-      <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2 md:gap-4">
         {movies.map((movie: Movie) => (
-          <Link href={`/movie/${movie.id}`} key={movie.id} className="rounded-lg overflow-hidden">
+          <Link
+            href={`/movie/${movie.id}`}
+            key={movie.id}
+            className="rounded-lg overflow-hidden transition-transform duration-200 ease-in-out hover:scale-105">
             {movie.poster_path ? (
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -47,7 +50,9 @@ export default async function Home({ searchParams }: HomeProps) {
                 className="w-full object-cover"
               />
             ) : (
-              <div className="w-full h-60 md:h-96 flex justify-center items-center">{movie.title}</div>
+              <div className="w-full h-full bg-gray-900 dark:bg-white flex justify-center items-center">
+                {movie.title}
+              </div>
             )}
           </Link>
         ))}
