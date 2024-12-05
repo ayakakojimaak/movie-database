@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import YouTubePlayer from "@/components/features/YouTubePlayer";
+import { YouTubePlayer } from "@/components/features/YouTubePlayer";
 import { getDominantColors, determineTextColor } from "@/lib/colorUtils";
 
 interface MovieDetail {

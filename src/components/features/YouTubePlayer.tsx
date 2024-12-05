@@ -1,23 +1,26 @@
 "use client";
+
 import React, { useEffect, useRef, useState } from "react";
 
-const YouTubePlayer: React.FC<{ videoId: string; placeholder: string }> = ({ videoId, placeholder }) => {
+interface YouTubePlayerProps {
+  videoId: string;
+  placeholder: string;
+}
+
+export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placeholder }) => {
   const playerRef = useRef<HTMLDivElement | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // YouTube APIスクリプトをロード
     const script = document.createElement("script");
     script.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(script);
 
-    // APIが準備完了時にプレイヤーを初期化
     (window as any).onYouTubeIframeAPIReady = () => {
       initializePlayer();
     };
 
     return () => {
-      // コンポーネントがアンマウントされた際にスクリプトを削除
       document.body.removeChild(script);
     };
   }, []);
@@ -25,7 +28,7 @@ const YouTubePlayer: React.FC<{ videoId: string; placeholder: string }> = ({ vid
   const initializePlayer = () => {
     if (playerRef.current) {
       new (window as any).YT.Player(playerRef.current, {
-        videoId: videoId,
+        videoId,
         playerVars: {
           autoplay: 1,
           mute: 1,
@@ -36,7 +39,7 @@ const YouTubePlayer: React.FC<{ videoId: string; placeholder: string }> = ({ vid
           showinfo: 0,
         },
         events: {
-          onReady: () => setIsLoaded(true), // 読み込み完了時にフラグを更新
+          onReady: () => setIsLoaded(true),
         },
       });
     }
@@ -44,7 +47,6 @@ const YouTubePlayer: React.FC<{ videoId: string; placeholder: string }> = ({ vid
 
   return (
     <div>
-      {/* プレイヤー読み込み前のプレースホルダー */}
       {!isLoaded && (
         <img
           src={placeholder}
@@ -54,7 +56,6 @@ const YouTubePlayer: React.FC<{ videoId: string; placeholder: string }> = ({ vid
           }}
         />
       )}
-      {/* YouTubeプレイヤーの埋め込み */}
       <div
         ref={playerRef}
         style={{
@@ -63,5 +64,3 @@ const YouTubePlayer: React.FC<{ videoId: string; placeholder: string }> = ({ vid
     </div>
   );
 };
-
-export default YouTubePlayer;

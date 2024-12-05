@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Search from "../ui/Search";
-import DarkModeToggle from "../ui/DarkModeToggle";
+import { Search } from "../ui/Search";
+import { DarkModeToggle } from "../ui/DarkModeToggle";
 
-const Header = () => {
+export const Header = () => {
   return (
     <header className="bg-gray-800 text-white p-4">
       <nav className="container mx-auto flex justify-between items-center">
@@ -27,5 +27,3 @@ const Header = () => {
     </header>
   );
 };
-
-export default Header;

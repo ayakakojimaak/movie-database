@@ -1,6 +1,6 @@
 import React from "react";
 
-export default async function Home() {
+export constasync function Home() {
   return (
     <div className="flex items-center justify-center">
       <div className="px-8 py-6 mt-4 text-left rounded-xl">

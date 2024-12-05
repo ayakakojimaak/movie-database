@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { BiSolidSun, BiSolidMoon } from "react-icons/bi";
 
-const DarkModeToggle = () => {
+export const DarkModeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const darkModePreference =
     localStorage.getItem("theme") === "dark" ||
@@ -37,5 +37,3 @@ const DarkModeToggle = () => {
     </button>
   );
 };
-
-export default DarkModeToggle;

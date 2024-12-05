@@ -1,7 +1,7 @@
 "use client";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-const Search = () => {
+export const Search = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -33,5 +33,3 @@ const Search = () => {
     </div>
   );
 };
-
-export default Search;
