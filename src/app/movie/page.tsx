@@ -4,14 +4,14 @@ import Link from "next/link";
 interface Movie {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path?: string;
 }
 
-interface HomeProps {
+interface MovieProps {
   searchParams: { query?: string };
 }
 
-export default async function Home({ searchParams }: HomeProps) {
+export default async function Movie({ searchParams }: MovieProps) {
   const { query } = await searchParams;
 
   let url;
@@ -31,9 +31,10 @@ export default async function Home({ searchParams }: HomeProps) {
   const data = await fetch(url, options);
   const data_json = await data.json();
   const movies: Movie[] = data_json.results;
+  console.log(movies);
 
   return (
-    <div className="container min-h-screen mx-auto p-4">
+    <div className="container mx-auto p-4">
       <h1 className="text-2xl dark:text-white font-bold mb-4">
         {query ? `Search Results: ${query}` : "Trending Movies"}
       </h1>

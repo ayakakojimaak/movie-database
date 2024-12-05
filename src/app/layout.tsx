@@ -19,7 +19,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-white dark:bg-gray-900 duration-200 antialiased`}>
         <Header />
-        <main className="container min-h-screen mx-auto p-4">{children}</main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>
