@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import YouTubePlayer from "@/components/features/YouTubePlayer";
-import { getDominantColors } from "@/lib/colorUtils";
+import { getDominantColors, determineTextColor } from "@/lib/colorUtils";
 
 interface MovieDetail {
   id: number;
@@ -41,8 +41,7 @@ export default async function MovieDetails({ params }: Props) {
   // pick color
   const imageUrl = `https://image.tmdb.org/t/p/w500${detailData.backdrop_path}`;
   const dominantColors = await getDominantColors(imageUrl);
-
-  console.log(dominantColors);
+  const textColor = determineTextColor(dominantColors[0]);
 
   return (
     <div style={{ background: dominantColors[0] }}>
@@ -50,18 +49,20 @@ export default async function MovieDetails({ params }: Props) {
         <div
           className="w-full h-96 object-cover"
           style={{
-            background: `linear-gradient(to bottom, transparent 20%, ${dominantColors[0]}), url(https://image.tmdb.org/t/p/w500${detailData.backdrop_path}) no-repeat top/cover`,
+            background: `linear-gradient(to bottom, transparent 20%, ${dominantColors[0]}), url(https://image.tmdb.org/t/p/original${detailData.backdrop_path}) no-repeat top/cover`,
           }}
         />
-        <div className="container mx-auto p-4">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
+        <div className="container mx-auto p-4 -mt-20">
+          <div className="grid grid-cols-3 lg:grid-cols-4 gap-4 md:gap-12 md:gap-16">
             <img
               src={`https://image.tmdb.org/t/p/w500${detailData.poster_path}`}
               alt={detailData.title}
-              className="w-full object-cover"
+              className="hidden md:block w-full object-cover"
             />
-            <h1>{detailData.title}</h1>
-            <p>{detailData.overview}</p>
+            <div className={`col-span-full md:col-span-2 text-${textColor}`}>
+              <h1 className="text-4xl font-black">{detailData.title}</h1>
+              <p>{detailData.overview}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -71,7 +72,7 @@ export default async function MovieDetails({ params }: Props) {
         }}>
         <div className="container mx-auto p-4">
           <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2 md:gap-4">
-            <YouTubePlayer videoId={videosData[0].key} placeholder={"placeholder"} />
+            {/* <YouTubePlayer videoId={videosData[0].key} placeholder={"placeholder"} /> */}
           </div>
         </div>
       </div>

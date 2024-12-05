@@ -45,3 +45,16 @@ export async function getDominantColors(imageUrl: string): Promise<string[]> {
     return [];
   }
 }
+
+/**
+ * Calculate the brightness of a color (from RGB).
+ **/
+
+export function determineTextColor(dominantColors: string): string {
+  const r = parseInt(dominantColors.slice(1, 3), 16);
+  const g = parseInt(dominantColors.slice(3, 5), 16);
+  const b = parseInt(dominantColors.slice(5, 7), 16);
+
+  const brightness: number = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return brightness < 128 ? "white" : "block";
+}
