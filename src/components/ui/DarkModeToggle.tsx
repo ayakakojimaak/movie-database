@@ -5,12 +5,11 @@ import { BiSolidSun, BiSolidMoon } from "react-icons/bi";
 
 const DarkModeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const darkModePreference =
+    localStorage.getItem("theme") === "dark" ||
+    (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   useEffect(() => {
-    const darkModePreference =
-      localStorage.getItem("theme") === "dark" ||
-      (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
-
     if (darkModePreference) {
       document.documentElement.classList.add("dark");
       setIsDarkMode(true);
