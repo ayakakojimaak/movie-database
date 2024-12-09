@@ -9,28 +9,15 @@ interface YouTubePlayerProps {
 
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placeholder }) => {
   const playerRef = useRef<HTMLDivElement | null>(null);
+  const playerInstance = useRef<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(script);
-
-    (window as any).onYouTubeIframeAPIReady = () => {
-      initializePlayer();
-    };
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
 
   const initializePlayer = () => {
     if (playerRef.current) {
-      new (window as any).YT.Player(playerRef.current, {
+      playerInstance.current = new (window as any).YT.Player(playerRef.current, {
         videoId,
         playerVars: {
-          autoplay: 1,
+          autoplay: 0,
           mute: 1,
           controls: 0,
           modestbranding: 1,
@@ -45,22 +32,42 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placehold
     }
   };
 
+  const handleMouseEnter = () => {
+    if (playerInstance.current) {
+      playerInstance.current.mute(false);
+      playerInstance.current.playVideo();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (playerInstance.current) {
+      playerInstance.current.pauseVideo();
+      playerInstance.current.mute(true);
+    }
+  };
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(script);
+    (window as any).onYouTubeIframeAPIReady = () => {
+      initializePlayer();
+    };
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
-    <div>
+    <div
+      className="relative w-full"
+      style={{ paddingBottom: "56.25%", position: "relative" }} // 16:9
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}>
       {!isLoaded && (
-        <img
-          src={placeholder}
-          alt="Loading"
-          style={{
-            objectFit: "cover",
-          }}
-        />
+        <img src={placeholder} alt="Loading" className="absolute top-0 left-0 w-full h-full object-cover" />
       )}
-      <div
-        ref={playerRef}
-        style={{
-          zIndex: isLoaded ? 0 : -1,
-        }}></div>
+      <div ref={playerRef} className={`absolute top-0 left-0 w-full h-full transition-opacity duration-300`}></div>
     </div>
   );
 };

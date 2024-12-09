@@ -3,6 +3,11 @@ import Link from "next/link";
 import { YouTubePlayer } from "@/components/features/YouTubePlayer";
 import { getDominantColors, determineTextColor } from "@/lib/colorUtils";
 
+interface Genre {
+  id: number;
+  name: string;
+}
+
 interface MovieDetail {
   id: number;
   title: string;
@@ -10,11 +15,20 @@ interface MovieDetail {
   poster_path?: string;
   backdrop_path?: string;
   overview?: string;
-  genres: [];
+  genres: Genre[];
 }
+
 interface MovieVideos {
+  id: string;
   key: string;
 }
+
+interface SimilarMovie {
+  id: number;
+  title: string;
+  poster_path?: string;
+}
+
 interface Props {
   params: { movieId?: string };
 }
@@ -32,7 +46,6 @@ export default async function MovieDetails({ params }: Props) {
   const detailURL = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
   const detailRes = await fetch(detailURL, options);
   const detailData: MovieDetail = await detailRes.json();
-  console.log(detailData);
 
   const videosURL = `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`;
   const videosRes = await fetch(videosURL, options);
@@ -42,10 +55,8 @@ export default async function MovieDetails({ params }: Props) {
   const similarURL = `https://api.themoviedb.org/3/movie/${movieId}/similar?language=en-US&page=1`;
   const similarRes = await fetch(similarURL, options);
   const similarDataArray = await similarRes.json();
-  const similarData = similarDataArray.results;
-  console.log(similarData);
+  const similarData: SimilarMovie[] = similarDataArray.results;
 
-  // pick color
   const imageUrl = `https://image.tmdb.org/t/p/w500${detailData.backdrop_path}`;
   const dominantColors = await getDominantColors(imageUrl);
   const textColor = determineTextColor(dominantColors[0]);
@@ -60,7 +71,8 @@ export default async function MovieDetails({ params }: Props) {
           }}
         />
         <div className="container mx-auto p-4 -mt-20">
-          <div className="grid grid-cols-3 lg:grid-cols-4 gap-4 md:gap-12 md:gap-16">
+          {/* title */}
+          <div className="grid grid-cols-3 lg:grid-cols-4 gap-4 md:gap-12">
             <img
               src={`https://image.tmdb.org/t/p/w500${detailData.poster_path}`}
               alt={detailData.title}
@@ -70,14 +82,10 @@ export default async function MovieDetails({ params }: Props) {
               <h1 className="text-4xl font-black">{detailData.title}</h1>
               <h2 className="text-lg font-black">{detailData.tagline}</h2>
               {detailData.genres.length && (
-                <ul>
+                <ul className="flex flex-wrap gap-2">
                   {detailData.genres.map((genre) => (
                     <li key={genre.id}>
-                      <Link
-                        href={`/movie/${genre.id}`}
-                        className="rounded-lg overflow-hidden transition-transform duration-200 ease-in-out hover:scale-105">
-                        #{genre.name}
-                      </Link>
+                      <Link href={`/genre/${genre.id}`}>#{genre.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -85,33 +93,43 @@ export default async function MovieDetails({ params }: Props) {
               <p>{detailData.overview}</p>
             </div>
           </div>
-          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-4">
-            {similarData.map((movie) => (
-              <Link
-                href={`/movie/${movie.id}`}
-                key={movie.id}
-                className="rounded-lg overflow-hidden transition-transform duration-200 ease-in-out hover:scale-105">
-                {movie.poster_path ? (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                    alt={movie.title}
-                    className="w-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-900 dark:bg-white flex justify-center items-center">
-                    {movie.title}
-                  </div>
-                )}
-              </Link>
+          <div>
+            {videosData.map((video) => (
+              <YouTubePlayer
+                key={video.id}
+                videoId={video.key}
+                placeholder={`https://image.tmdb.org/t/p/w500${detailData.poster_path}`}
+              />
             ))}
           </div>
+          {/* Similar Movies */}
+          <div className="md:overflow-x-auto mt-8">
+            <div className="grid grid-cols-3 gap-2 md:flex md:gap-4">
+              {similarData.map((movie) => (
+                <Link href={`/movie/${movie.id}`} key={movie.id} className="rounded-lg flex-shrink-0 md:w-40">
+                  {movie.poster_path ? (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                      alt={movie.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full bg-gray-900 dark:bg-white flex justify-center items-center">
+                      {movie.title}
+                    </div>
+                  )}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-      <div
-        style={{
-          background: `linear-gradient(to bottom, ${dominantColors[0]}, ${dominantColors[1]}`,
-        }}>
-        <YouTubePlayer videoId={videosData[0].key} placeholder={"placeholder"} />
+        <div>
+          <div
+            style={{
+              background: `linear-gradient(to bottom, ${dominantColors[0]}, ${dominantColors[1]}`,
+            }}
+            className="container mx-auto p-4 -mt-20"></div>
+        </div>
       </div>
     </div>
   );
