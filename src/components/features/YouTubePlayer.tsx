@@ -13,10 +13,26 @@ interface YTPlayer {
   pauseVideo: () => void;
 }
 
+interface YTPlayerOptions {
+  videoId: string;
+  playerVars: {
+    autoplay: number;
+    mute: number;
+    controls: number;
+    modestbranding: number;
+    loop: number;
+    rel: number;
+    showinfo: number;
+  };
+  events: {
+    onReady: () => void;
+  };
+}
+
 declare global {
   interface Window {
     YT?: {
-      Player: new (element: HTMLElement, options: any) => YTPlayer;
+      Player: new (element: HTMLElement, options: YTPlayerOptions) => YTPlayer;
     };
     onYouTubeIframeAPIReady?: () => void;
   }
