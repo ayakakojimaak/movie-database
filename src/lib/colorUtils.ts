@@ -56,5 +56,5 @@ export function determineTextColor(dominantColors: string): string {
   const b = parseInt(dominantColors.slice(5, 7), 16);
 
   const brightness: number = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return brightness < 128 ? "white" : "block";
+  return brightness < 128 ? "white" : "black";
 }

@@ -62,11 +62,11 @@ export default async function MovieDetails({ params }: Props) {
   const textColor = determineTextColor(dominantColors[0]);
 
   return (
-    <div className={`text-${textColor}`} style={{ background: dominantColors[0] }}>
+    <div style={{ background: dominantColors[0], color: textColor }}>
       <div
         className="w-full h-96 object-cover"
         style={{
-          background: `linear-gradient(to bottom, transparent 20%, ${dominantColors[0]}), url(https://image.tmdb.org/t/p/original${detailData.backdrop_path}) no-repeat top/cover`,
+          background: `linear-gradient(to bottom, transparent 10%, ${dominantColors[0]}), url(https://image.tmdb.org/t/p/original${detailData.backdrop_path}) no-repeat center/cover`,
         }}
       />
       <div className="container mx-auto p-4 -mt-20">
@@ -80,7 +80,7 @@ export default async function MovieDetails({ params }: Props) {
           <div className="col-span-full md:col-span-2">
             <h1 className="text-4xl font-black mb-2">{detailData.title}</h1>
             <h2 className="text-lg font-black mb-2">{detailData.tagline}</h2>
-            {detailData.genres.length && (
+            {detailData.genres.length > 0 && (
               <ul className="flex flex-wrap gap-2 mb-2">
                 {detailData.genres.map((genre) => (
                   <li key={genre.id}>
@@ -94,7 +94,7 @@ export default async function MovieDetails({ params }: Props) {
         </div>
         <div>
           {/* {videosData.map((video) => ( */}
-          {videosData.length && (
+          {videosData.length > 0 && (
             <YouTubePlayer
               key={videosData[0].id}
               videoId={videosData[0].key}
@@ -104,34 +104,36 @@ export default async function MovieDetails({ params }: Props) {
           {/* ))} */}
         </div>
       </div>
-      <div
-        style={{
-          background: `linear-gradient(to bottom, ${dominantColors[0]}, ${dominantColors[1]}`,
-        }}>
-        <div className="container mx-auto p-4">
-          {/* Similar Movies */}
-          <h3 className="text-2xl font-black mb-4">You May Also Like</h3>
-          <div className="md:overflow-x-auto mt-4 mb-8">
-            <div className="grid grid-cols-3 gap-2 md:flex md:gap-4">
-              {similarData.map((movie) => (
-                <Link href={`/movie/${movie.id}`} key={movie.id} className="rounded-lg flex-shrink-0 md:w-40">
-                  {movie.poster_path ? (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      alt={movie.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="h-full bg-gray-900 dark:bg-white flex justify-center items-center">
-                      {movie.title}
-                    </div>
-                  )}
-                </Link>
-              ))}
+      {similarData.length > 0 && (
+        <div
+          style={{
+            background: `linear-gradient(to bottom, ${dominantColors[0]}, ${dominantColors[1]}`,
+          }}>
+          <div className="container mx-auto p-4">
+            {/* Similar Movies */}
+            <h3 className="text-2xl font-black mb-4">You May Also Like</h3>
+            <div className="md:overflow-x-auto mt-4 mb-8">
+              <div className="grid grid-cols-3 gap-2 md:flex md:gap-4">
+                {similarData.map((movie) => (
+                  <Link href={`/movie/${movie.id}`} key={movie.id} className="rounded-lg flex-shrink-0 md:w-40">
+                    {movie.poster_path ? (
+                      <img
+                        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                        alt={movie.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-full bg-gray-900 dark:bg-white flex justify-center items-center">
+                        {movie.title}
+                      </div>
+                    )}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

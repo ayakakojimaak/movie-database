@@ -34,7 +34,7 @@ export const DarkModeToggle = () => {
 
   return (
     <button onClick={toggleDarkMode} className="p-2 rounded focus:outline-none">
-      {isDarkMode ? <BiSolidSun className="w-6 h-6" /> : <BiSolidMoon className="w-6 h-6" />}
+      {isDarkMode ? <BiSolidSun className="w-6 h-6" /> : <BiSolidMoon className="w-6 h-6 text-white" />}
     </button>
   );
 };

@@ -1,39 +1,40 @@
 import React from "react";
 
-export constasync function Home() {
+export default function About() {
   return (
-    <div className="flex items-center justify-center">
-      <div className="px-8 py-6 mt-4 text-left rounded-xl">
-        <div className="flex flex-col justify-center items-center h-full select-none">
-          <div className="flex flex-col items-center justify-center gap-2 mb-8">
-            <img src="/logo.svg" className="w-8" />
-            <p className="m-0 text-[16px] font-semibold dark:text-white">Login to your Account</p>
-            <span className="m-0 text-xs max-w-[90%] text-center text-[#8B8E98]">
-              Get started with our app, just start section and enjoy experience.
-            </span>
+    <>
+      <img src="https://via.placeholder.com/800x400" alt="Platform Screenshot" className="w-full h-auto" />
+      {/* Storyline Section */}
+      <div className="my-8">
+        <section className="p-6">
+          <div className="container mx-auto text-center">
+            <h2 className="text-3xl font-semibold mb-4">How It Works</h2>
+            <p className="text-lg max-w-3xl mx-auto">
+              Our platform is designed for those who love to share their thoughts and experiences about the
+              entertainment world. Whether it's a movie, TV show, or anime, you can:
+              <ul className="list-disc list-inside mt-4 text-left text-lg mx-auto max-w-3xl">
+                <li>Review and rate your favorite works.</li>
+                <li>Add your favorite movies, TV shows, and anime to your personal list.</li>
+                <li>Share your thoughts and communicate with others through discussions and comments.</li>
+              </ul>
+            </p>
           </div>
-          <div className="w-full flex flex-col gap-2">
-            <label className="font-semibold text-xs text-gray-400 ">Username</label>
-            <input
-              className="border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
-              placeholder="Username"
-            />
+        </section>
+
+        {/* Get in Touch Section */}
+        <section className="p-6">
+          <div className="container mx-auto text-center">
+            <h2 className="text-3xl font-semibold mb-6">Get in Touch</h2>
+            <p className="text-lg mb-6 max-w-2xl mx-auto">
+              Have any questions or feedback? We’d love to hear from you. Get in touch with our team below to learn more
+              about the platform or share your ideas for improvement.
+            </p>
+            <a href="" className="bg-blue-500 text-white px-6 py-3 rounded-full text-lg hover:bg-blue-600">
+              Contact Us
+            </a>
           </div>
-        </div>
-        <div className="w-full flex flex-col gap-2">
-          <label className="font-semibold text-xs text-gray-400 ">Password</label>
-          <input
-            type="password"
-            className="border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 dark:bg-gray-900"
-            placeholder="••••••••"
-          />
-        </div>
-        <div className="mt-5">
-          <button className="py-1 px-8 bg-blue-500 hover:bg-blue-800 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg cursor-pointer select-none">
-            Login
-          </button>
-        </div>
+        </section>
       </div>
-    </div>
+    </>
   );
 }
