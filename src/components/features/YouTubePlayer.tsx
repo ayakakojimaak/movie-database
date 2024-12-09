@@ -19,7 +19,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placehold
         playerVars: {
           autoplay: 0,
           mute: 1,
-          controls: 0,
+          controls: 1,
           modestbranding: 1,
           loop: 1,
           rel: 0,
