@@ -31,7 +31,6 @@ export default async function Movie({ searchParams }: MovieProps) {
   const data = await fetch(url, options);
   const data_json = await data.json();
   const movies: Movie[] = data_json.results;
-  console.log(movies);
 
   return (
     <div className="container mx-auto p-4">

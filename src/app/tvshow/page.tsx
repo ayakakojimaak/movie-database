@@ -40,7 +40,7 @@ export default async function TVshow({ searchParams }: TVshowProps) {
       <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2 md:gap-4">
         {TVList.map((list: TVshow) => (
           <Link
-            href={`/movie/${list.id}`}
+            href={`/`}
             key={list.id}
             className="rounded-lg overflow-hidden transition-transform duration-200 ease-in-out hover:scale-105">
             {list.poster_path ? (
