@@ -1,4 +1,3 @@
-// @ts-ignore
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -10,6 +9,7 @@ interface YouTubePlayerProps {
 
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placeholder }) => {
   const playerRef = useRef<HTMLDivElement | null>(null);
+  // @ts-ignore
   const playerInstance = useRef<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
