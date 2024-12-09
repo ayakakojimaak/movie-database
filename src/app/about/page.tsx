@@ -11,7 +11,7 @@ export default function About() {
             <h2 className="text-3xl font-semibold mb-4">How It Works</h2>
             <p className="text-lg max-w-3xl mx-auto">
               Our platform is designed for those who love to share their thoughts and experiences about the
-              entertainment world. Whether it's a movie, TV show, or anime, you can:
+              entertainment world. Whether it is a movie, TV show, or anime, you can:
               <ul className="list-disc list-inside mt-4 text-left text-lg mx-auto max-w-3xl">
                 <li>Review and rate your favorite works.</li>
                 <li>Add your favorite movies, TV shows, and anime to your personal list.</li>
