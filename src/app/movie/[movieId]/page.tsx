@@ -34,7 +34,7 @@ interface Props {
 }
 
 export default async function MovieDetails({ params }: Props) {
-  const { movieId } = await params;
+  const { movieId } = params;
   const options = {
     method: "GET",
     headers: {

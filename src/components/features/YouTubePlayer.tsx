@@ -8,10 +8,29 @@ interface YouTubePlayerProps {
 }
 
 declare global {
-  interface Window {
-    YT: {
-      Player: new (element: HTMLElement, options: any) => any;
-      iframe_api_ready: boolean;
+  interface YT {
+    Player: {
+      new (
+        element: HTMLElement,
+        options: {
+          videoId: string;
+          playerVars: {
+            autoplay: number;
+            mute: number;
+            controls: number;
+            modestbranding: number;
+            loop: number;
+            rel: number;
+            showinfo: number;
+          };
+          events: {
+            onReady: () => void;
+          };
+        }
+      ): YT.Player;
+      mute: (mute: boolean) => void;
+      playVideo: () => void;
+      pauseVideo: () => void;
     };
   }
 }
@@ -23,7 +42,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placehold
 
   const initializePlayer = () => {
     if (playerRef.current) {
-      playerInstance.current = new window.YT.Player(playerRef.current, {
+      playerInstance.current = new (window as any).YT.Player(playerRef.current, {
         videoId,
         playerVars: {
           autoplay: 0,
@@ -59,11 +78,9 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placehold
     const script = document.createElement("script");
     script.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(script);
-
-    window.onYouTubeIframeAPIReady = () => {
+    (window as any).onYouTubeIframeAPIReady = () => {
       initializePlayer();
     };
-
     return () => {
       document.body.removeChild(script);
     };
