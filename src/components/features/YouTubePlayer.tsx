@@ -1,3 +1,4 @@
+// @ts-ignore
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -7,37 +8,9 @@ interface YouTubePlayerProps {
   placeholder: string;
 }
 
-declare global {
-  interface YT {
-    Player: {
-      new (
-        element: HTMLElement,
-        options: {
-          videoId: string;
-          playerVars: {
-            autoplay: number;
-            mute: number;
-            controls: number;
-            modestbranding: number;
-            loop: number;
-            rel: number;
-            showinfo: number;
-          };
-          events: {
-            onReady: () => void;
-          };
-        }
-      ): YT.Player;
-      mute: (mute: boolean) => void;
-      playVideo: () => void;
-      pauseVideo: () => void;
-    };
-  }
-}
-
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placeholder }) => {
   const playerRef = useRef<HTMLDivElement | null>(null);
-  const playerInstance = useRef<YT.Player | null>(null);
+  const playerInstance = useRef<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const initializePlayer = () => {
