@@ -7,15 +7,29 @@ interface YouTubePlayerProps {
   placeholder: string;
 }
 
+interface YTPlayer {
+  mute: (mute: boolean) => void;
+  playVideo: () => void;
+  pauseVideo: () => void;
+}
+
+declare global {
+  interface Window {
+    YT?: {
+      Player: new (element: HTMLElement, options: any) => YTPlayer;
+    };
+    onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placeholder }) => {
   const playerRef = useRef<HTMLDivElement | null>(null);
-  // @ts-ignore
-  const playerInstance = useRef<any>(null);
+  const playerInstance = useRef<YTPlayer | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const initializePlayer = () => {
-    if (playerRef.current) {
-      playerInstance.current = new (window as any).YT.Player(playerRef.current, {
+    if (playerRef.current && window.YT) {
+      playerInstance.current = new window.YT.Player(playerRef.current, {
         videoId,
         playerVars: {
           autoplay: 0,
@@ -51,7 +65,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({ videoId, placehold
     const script = document.createElement("script");
     script.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(script);
-    (window as any).onYouTubeIframeAPIReady = () => {
+    window.onYouTubeIframeAPIReady = () => {
       initializePlayer();
     };
     return () => {
