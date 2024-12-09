@@ -7,12 +7,8 @@ interface TVshow {
   poster_path?: string;
 }
 
-interface TVshowProps {
-  searchParams: { query?: string };
-}
-
-export default async function TVshow({ searchParams }: TVshowProps) {
-  const { query } = await searchParams;
+export default async function TVshow({ params }: { params: Promise<{ query: string }> }) {
+  const query = (await params).query;
 
   let url;
   if (query) {

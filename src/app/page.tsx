@@ -7,12 +7,8 @@ interface Movie {
   poster_path: string;
 }
 
-interface HomeProps {
-  searchParams: { query?: string };
-}
-
-export default async function Home({ searchParams }: HomeProps) {
-  const { query } = await searchParams;
+export default async function Home({ params }: { params: Promise<{ query: string }> }) {
+  const query = (await params).query;
 
   let url;
   if (query) {
