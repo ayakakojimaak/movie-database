@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "next/link";
+// import Link from "next/link";
 
 interface Movie {
   id: number;
@@ -10,23 +10,23 @@ interface Movie {
 export default async function Home({ searchParams }: { searchParams: Promise<{ query: string }> }) {
   const query = (await searchParams).query;
 
-  let url;
-  if (query) {
-    url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`;
-  } else {
-    url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
-  }
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
-    },
-  };
+  // let url;
+  // if (query) {
+  //   url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`;
+  // } else {
+  //   url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
+  // }
+  // const options = {
+  //   method: "GET",
+  //   headers: {
+  //     accept: "application/json",
+  //     Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+  //   },
+  // };
 
-  const data = await fetch(url, options);
-  const data_json = await data.json();
-  const movies: Movie[] = data_json.results;
+  // const data = await fetch(url, options);
+  // const data_json = await data.json();
+  // const movies: Movie[] = data_json.results;
 
   return (
     <div className="container min-h-screen mx-auto p-4">
