@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { YouTubePlayer } from "@/components/features/YouTubePlayer";
-// import { getDominantColors, determineTextColor } from "@/lib/colorUtils";
+import { getDominantColors, determineTextColor } from "@/lib/colorUtils";
 
 interface Genre {
   id: number;
@@ -31,7 +31,6 @@ interface SimilarMovie {
 
 export default async function MovieDetails({ params }: { params: Promise<{ movieId: string }> }) {
   const movieId = (await params).movieId;
-  console.log(process.env.ACCESS_TOKEN);
   const options = {
     headers: {
       method: "GET",
@@ -53,19 +52,17 @@ export default async function MovieDetails({ params }: { params: Promise<{ movie
   const similarDataArray = await similarRes.json();
   const similarData: SimilarMovie[] = similarDataArray.results;
 
-  // const imageUrl = `https://image.tmdb.org/t/p/w500${detailData.backdrop_path}`;
-  // const dominantColors = await getDominantColors(imageUrl);
-  // const textColor = determineTextColor(dominantColors[0]);
+  const imageUrl = `https://image.tmdb.org/t/p/w500${detailData.backdrop_path}`;
+  const dominantColors = await getDominantColors(imageUrl);
+  const textColor = determineTextColor(dominantColors[0]);
 
   return (
-    <div
-    // style={{ background: dominantColors[0], color: textColor }}
-    >
+    <div style={{ background: dominantColors[0], color: textColor }}>
       <div
         className="w-full h-96 object-cover"
-        // style={{
-        //   background: `linear-gradient(to bottom, transparent 10%, ${dominantColors[0]}), url(https://image.tmdb.org/t/p/original${detailData.backdrop_path}) no-repeat center/cover`,
-        // }}
+        style={{
+          background: `linear-gradient(to bottom, transparent 10%, ${dominantColors[0]}), url(https://image.tmdb.org/t/p/original${detailData.backdrop_path}) no-repeat center/cover`,
+        }}
       />
       <div className="container mx-auto p-4 -mt-20">
         {/* title */}
@@ -104,11 +101,9 @@ export default async function MovieDetails({ params }: { params: Promise<{ movie
       </div>
       {similarData.length > 0 && (
         <div
-          style={
-            {
-              // background: `linear-gradient(to bottom, ${dominantColors[0]}, ${dominantColors[1]}`,
-            }
-          }>
+          style={{
+            background: `linear-gradient(to bottom, ${dominantColors[0]}, ${dominantColors[1]}`,
+          }}>
           <div className="container mx-auto p-4">
             {/* Similar Movies */}
             <h3 className="text-2xl font-black mb-4">You May Also Like</h3>
