@@ -4,10 +4,10 @@ import Link from "next/link";
 interface Movie {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path?: string;
 }
 
-export default async function Home({ searchParams }: { searchParams: Promise<{ query: string }> }) {
+export default async function Movie({ searchParams }: { searchParams: Promise<{ query: string }> }) {
   const query = (await searchParams).query;
 
   let url;
@@ -29,7 +29,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
   const movies: Movie[] = data_json.results;
 
   return (
-    <div className="container min-h-screen mx-auto p-4">
+    <div className="container mx-auto p-4">
       <h1 className="text-2xl dark:text-white font-bold mb-4">
         {query ? `Search Results: ${query}` : "Trending Movies"}
       </h1>
