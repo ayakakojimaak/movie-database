@@ -1,7 +1,9 @@
 "use client";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-export const Search = () => {
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { Suspense } from "react";
+
+const SearchComponent = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -33,3 +35,9 @@ export const Search = () => {
     </div>
   );
 };
+
+export const Search = () => (
+  <Suspense fallback={<div>Loading search...</div>}>
+    <SearchComponent />
+  </Suspense>
+);

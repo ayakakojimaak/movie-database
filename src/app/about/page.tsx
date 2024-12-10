@@ -1,8 +1,6 @@
-import React from "react";
-
 export default function About() {
   return (
-    <>
+    <div>
       <img src="https://via.placeholder.com/800x400" alt="Platform Screenshot" className="w-full h-auto" />
       {/* Storyline Section */}
       <div className="my-8">
@@ -35,6 +33,6 @@ export default function About() {
           </div>
         </section>
       </div>
-    </>
+    </div>
   );
 }
