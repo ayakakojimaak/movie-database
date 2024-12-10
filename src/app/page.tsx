@@ -1,11 +1,11 @@
 import React from "react";
 // import Link from "next/link";
 
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
-}
+// interface Movie {
+//   id: number;
+//   title: string;
+//   poster_path: string;
+// }
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ query: string }> }) {
   const query = (await searchParams).query;
