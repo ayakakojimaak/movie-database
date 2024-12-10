@@ -34,7 +34,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         {query ? `Search Results: ${query}` : "Trending Movies"}
       </h1>
       <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2 md:gap-4">
-        {movies.map((movie: Movie) => (
+        {/* {movies.map((movie: Movie) => (
           <Link
             href={`/movie/${movie.id}`}
             key={movie.id}
@@ -51,7 +51,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
               </div>
             )}
           </Link>
-        ))}
+        ))} */}
       </div>
     </div>
   );

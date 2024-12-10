@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function About() {
   return (
     <div>
@@ -27,9 +29,9 @@ export default function About() {
               Have any questions or feedback? We’d love to hear from you. Get in touch with our team below to learn more
               about the platform or share your ideas for improvement.
             </p>
-            <a href="" className="bg-blue-500 text-white px-6 py-3 rounded-full text-lg hover:bg-blue-600">
+            <Link href="/" className="bg-blue-500 text-white px-6 py-3 rounded-full text-lg hover:bg-blue-600">
               Contact Us
-            </a>
+            </Link>
           </div>
         </section>
       </div>
