@@ -10,14 +10,11 @@ export const Header = () => {
           <Link href="/" className="text-lg font-bold">
             Movie Website
           </Link>
-          <div className="flex justify-between items-center gap-3">
+          {/* <div className="flex justify-between items-center gap-3">
             <Link href="/movie" className="hover:text-gray-400">
               Movie
             </Link>
-            <Link href="/tvshow" className="hover:text-gray-400">
-              TV
-            </Link>
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-between items-center gap-3">
           <Search />
