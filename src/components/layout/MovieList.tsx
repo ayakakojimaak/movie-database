@@ -9,17 +9,16 @@ interface Movie {
   poster_path: string;
 }
 
-export default function MovieList({ initialMovies, query }: { initialMovies: Movie[]; query: string }) {
-  const [movies, setMovies] = useState<Movie[]>(initialMovies);
+export default function MovieList({ query }: { query: string }) {
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [page, setPage] = useState(2); // 次のページをロードする
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
-  const fetchMoreMovies = async () => {
-    if (loading || !hasMore) return;
-
+  const fetchMovies = async (page: number, reset: boolean = false) => {
     setLoading(true);
+
     const url = query
       ? `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=${page}`
       : `https://api.themoviedb.org/3/trending/movie/day?language=en-US&page=${page}`;
@@ -37,18 +36,27 @@ export default function MovieList({ initialMovies, query }: { initialMovies: Mov
 
     setMovies((prevMovies) => {
       const uniqueMovies = data.results.filter((movie: Movie) => !prevMovies.some((m) => m.id === movie.id));
-      return [...prevMovies, ...uniqueMovies];
+      return reset ? uniqueMovies : [...prevMovies, ...uniqueMovies];
     });
+
     setHasMore(page < data.total_pages); // データがまだある場合
-    setPage((prevPage) => prevPage + 1);
     setLoading(false);
   };
 
+  // 初回レンダリングと `query` の変化時に初期化
+  useEffect(() => {
+    setPage(2); // ページ番号をリセット
+    setHasMore(true); // 全てのデータが取得済みの状態をリセット
+    fetchMovies(1, true); // 新しいクエリでデータを取得し直す
+  }, [query]);
+
+  // スクロールで次のページを取得
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchMoreMovies();
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          fetchMovies(page);
+          setPage((prevPage) => prevPage + 1);
         }
       },
       { threshold: 1.0, rootMargin: "200px" }
@@ -61,7 +69,7 @@ export default function MovieList({ initialMovies, query }: { initialMovies: Mov
     return () => {
       if (loaderRef.current) observer.unobserve(loaderRef.current);
     };
-  }, [loaderRef, hasMore, loading]);
+  }, [loaderRef, hasMore, loading, page]);
 
   return (
     <div className="container min-h-screen mx-auto p-4">
