@@ -51,7 +51,7 @@ export default function MovieList({ initialMovies, query }: { initialMovies: Mov
           fetchMoreMovies();
         }
       },
-      { threshold: 1.0 }
+      { threshold: 1.0, rootMargin: "200px" }
     );
 
     if (loaderRef.current) {
