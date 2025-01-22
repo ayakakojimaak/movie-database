@@ -34,7 +34,7 @@ export default async function MovieDetails({ params }: { params: Promise<{ movie
   const options = {
     headers: {
       method: "GET",
-      Authorization: `Bearer ${process.env.ACCESS_TOKEN}`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
     },
   };
 

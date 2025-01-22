@@ -7,11 +7,6 @@ export const Footer = () => {
         <Link href="/" className="text-lg font-bold">
           Movie Website
         </Link>
-        <div>
-          <Link href="/about" className="hover:text-gray-400">
-            About
-          </Link>
-        </div>
       </nav>
     </footer>
   );
