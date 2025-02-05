@@ -9,7 +9,7 @@ interface Genre {
 interface MovieHeaderProps {
   title: string;
   tagline: string;
-  overview: string;
+  overview?: string;
   posterPath?: string;
   genres: Genre[];
   textColor: string;
