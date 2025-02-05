@@ -10,12 +10,10 @@ interface Movie {
 export default async function Movie({ searchParams }: { searchParams: Promise<{ query: string }> }) {
   const query = (await searchParams).query;
 
-  let url;
-  if (query) {
-    url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`;
-  } else {
-    url = "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
-  }
+  const url = query
+    ? `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`
+    : "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
+
   const options = {
     method: "GET",
     headers: {

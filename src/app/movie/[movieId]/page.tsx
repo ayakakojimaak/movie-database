@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import MovieHeader from "@/components/layout/MovieHeader";
 import { YouTubePlayer } from "@/components/features/YouTubePlayer";
 import { getDominantColors, determineTextColor } from "@/lib/colorUtils";
 
@@ -66,27 +67,14 @@ export default async function MovieDetails({ params }: { params: Promise<{ movie
       />
       <div className="container mx-auto p-4 -mt-20">
         {/* title */}
-        <div className="grid grid-cols-3 lg:grid-cols-4 gap-4 md:gap-12 mb-0 md:mb-8">
-          <img
-            src={`https://image.tmdb.org/t/p/w500${detailData.poster_path}`}
-            alt={detailData.title}
-            className="hidden md:block w-full object-cover"
-          />
-          <div className="col-span-full md:col-span-2">
-            <h1 className="text-4xl font-black mb-2">{detailData.title}</h1>
-            <h2 className="text-lg font-black mb-2">{detailData.tagline}</h2>
-            {detailData?.genres?.length > 0 && (
-              <ul className="flex flex-wrap gap-2 mb-2">
-                {detailData.genres.map((genre) => (
-                  <li key={genre.id}>
-                    <Link href={`/genre/${genre.id}`}>#{genre.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <p className="mb-4">{detailData.overview}</p>
-          </div>
-        </div>
+        <MovieHeader
+          title={detailData.title}
+          tagline={detailData.tagline}
+          overview={detailData.overview}
+          posterPath={detailData.poster_path}
+          genres={detailData.genres}
+          textColor={textColor}
+        />
         <div>
           {/* {videosData.map((video) => ( */}
           {videosData.length > 0 && (
